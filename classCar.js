@@ -9,6 +9,38 @@ class Car {
     #isStarted = false;
     #mileage = 0;
 
+    constructor(brand, model, yearOfManufacturing, maxSpeed, maxFuelVolume, fuelConsumption) {
+        if (typeof brand == 'string' && brand.length >= 1 && brand.length <= 50) {
+            this.#brand = brand;
+        } 
+        else throw 'Некорректные значения';
+
+        if (typeof model == 'string' && model.length >= 1 && model.length <= 50) {
+            this.#model = model;
+        } 
+        else throw 'Некорректные значения';
+
+        if (typeof yearOfManufacturing == 'number' && yearOfManufacturing >= 1900 && yearOfManufacturing <= new Date().getFullYear()) {
+            this.#yearOfManufacturing = yearOfManufacturing;
+        } 
+        else throw 'Некорректные значения';
+
+        if (typeof maxSpeed == 'number' && maxSpeed >= 100 && maxSpeed <= 300) {
+            this.#maxSpeed = maxSpeed;
+        } 
+        else throw 'Некорректные значения';
+
+        if (typeof maxFuelVolume == 'number' && maxFuelVolume >= 10 && maxFuelVolume <= 50) {
+            this.#maxFuelVolume = maxFuelVolume;
+        } 
+        else throw 'Некорректные значения';
+
+        if (typeof fuelConsumption == 'number' && fuelConsumption > 0) {
+            this.#fuelConsumption = fuelConsumption;
+        } 
+        else throw 'Некорректные значения';
+    }
+
     get brand() {
         return this.#brand;
     }
@@ -102,13 +134,10 @@ class Car {
     }
 
     fillUpGasTank(fuel) {
-        if (typeof fuel != 'number') {
+        if (typeof fuel != 'number' || fuel <= 0) {
             throw 'Неверное количество топлива для заправки';
         }
-        else if (fuel <= 0) {
-            throw 'Неверное количество топлива для заправки';
-        }
-        else if (fuel > this.#maxFuelVolume || fuel + this.#currentFuelVolume > this.#maxFuelVolume) {
+        else if (fuel + this.#currentFuelVolume > this.#maxFuelVolume) {
             throw 'Топливный бак переполнен';
         }
         else this.#currentFuelVolume += fuel;
